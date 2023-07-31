@@ -8,13 +8,13 @@ const handler = NextAuth({
   providers: [
     // OAuth authentication providers...
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID as string,
-      clientSecret: process.env.GOOGLE_SECRET as string,
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_ID as string,
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET as string,
     }),
 
     GithubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
+      clientId: process.env.NEXT_PUBLIC_GITHUB_ID as string,
+      clientSecret: process.env.NEXT_PUBLIC_GITHUB_SECRET as string,
     }),
   ],
   callbacks: {

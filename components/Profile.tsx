@@ -12,7 +12,6 @@ const Profile = () => {
   const { data, isLoading } = useQuery<Question[], Error>(['questions'], getQuestions);
   const createdQuestions = data?.filter((question) => question.authorEmail === session?.user?.email).length;
 
-  console.log('session', session);
   if (isLoading) {
     return <Spin />;
   }

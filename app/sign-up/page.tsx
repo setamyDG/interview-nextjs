@@ -4,19 +4,8 @@ import { GoogleOutlined, GithubOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Divider, Form, Input } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { signIn, useSession } from 'next-auth/react';
-import React, { useEffect } from 'react';
-const LoginPage = () => {
-  const { data: session } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (session?.user) {
-      router.push('/');
-    }
-  }, [session?.user]);
-
+import { signIn } from 'next-auth/react';
+const LoginPage = async () => {
   return (
     <div className='flex justify-center'>
       <section className='bg-white px-12 py-12 rounded-2xl sm:shadow-2xl'>
@@ -42,10 +31,18 @@ const LoginPage = () => {
               <span className='text-sm'>Or continue with</span>
             </Divider>
           </div>
-          <Button className='w-full mt-8' onClick={() => signIn('google')} icon={<GoogleOutlined />}>
+          <Button
+            className='w-full mt-8'
+            onClick={() => signIn('google', { callbackUrl: '/' })}
+            icon={<GoogleOutlined />}
+          >
             Google
           </Button>
-          <Button className='w-full mt-4' onClick={() => signIn('github')} icon={<GithubOutlined />}>
+          <Button
+            className='w-full mt-4'
+            onClick={() => signIn('github', { callbackUrl: '/' })}
+            icon={<GithubOutlined />}
+          >
             Github
           </Button>
         </Form>
