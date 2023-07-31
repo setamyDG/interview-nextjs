@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "stylelint-config-property-sort-order-smacss"
+  ],
+  "customSyntax": "postcss-styled-syntax",
+  "rules": {
+    "color-no-invalid-hex": true
+  }
+}

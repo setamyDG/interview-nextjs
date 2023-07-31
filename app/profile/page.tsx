@@ -1,0 +1,18 @@
+import { getQuestions } from '@api/questions';
+import Profile from '@components/Profile';
+import { Hydrate, dehydrate } from '@tanstack/react-query';
+import getQueryClient from '@utils/getQueryClient';
+
+const ProfilePage = async () => {
+  const queryClient = getQueryClient();
+  await queryClient.prefetchQuery(['questions'], getQuestions);
+  const dehydratedState = dehydrate(queryClient);
+
+  return (
+    <Hydrate state={dehydratedState}>
+      <Profile />
+    </Hydrate>
+  );
+};
+
+export default ProfilePage;
