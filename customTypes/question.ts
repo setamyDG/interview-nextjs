@@ -1,5 +1,5 @@
 export interface Question {
-  id: string;
+  id?: string;
   techType: string;
   question: string;
   answer: string;
@@ -8,3 +8,10 @@ export interface Question {
   authorAvatar: string;
   createdAt: string;
 }
+
+export type TechCardType = {
+  title: string;
+  type: string;
+  avatar: string;
+  href: string;
+};

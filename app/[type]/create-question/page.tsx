@@ -1,28 +1,22 @@
-import CreateQuestionForm from '@components/CreateQuestionForm';
-import { revalidateTag } from 'next/cache';
+import { createQuestion } from '@app/actions/createQuestion';
+import CreateQuestionForm from '@components/CreateQuestionForm/CreateQuestionForm';
+import type { Metadata } from 'next';
 
-const CreateQuestion = () => {
-  // using server-actions
-  const createQuestion = async (data: FormData) => {
-    'use server';
-    await fetch('https://64c59304c853c26efadae416.mockapi.io/api/questions', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      next: {
-        tags: ['questions'],
-      },
-      headers: {
-        'Content-type': 'application/json',
-      },
-    });
-    revalidateTag('questions');
+type Props = {
+  params: {
+    type: string;
   };
-
-  return (
-    <section className='bg-white rounded-2xl sm:shadow-2xl px-12 py-12'>
-      <CreateQuestionForm createQuestion={createQuestion} />
-    </section>
-  );
 };
+
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => ({
+  title: `Creation question/answer form of | ${params.type}`,
+  description: `Creation question & answer form for ${params.type} topic`,
+});
+
+const CreateQuestion = async (): Promise<JSX.Element> => (
+  <section className='bg-white rounded-2xl sm:shadow-2xl px-12 py-12'>
+    <CreateQuestionForm createQuestion={createQuestion} />
+  </section>
+);
 
 export default CreateQuestion;

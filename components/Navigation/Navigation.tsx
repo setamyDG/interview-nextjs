@@ -1,6 +1,7 @@
 'use client';
 
 import { LogoutOutlined, RightCircleOutlined, MenuOutlined } from '@ant-design/icons';
+import { routes } from '@const/routes';
 import { Button, Divider, Drawer } from 'antd';
 import useNotification from 'antd/es/notification/useNotification';
 import Image from 'next/image';
@@ -9,11 +10,13 @@ import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 
-const Navigation = () => {
+const Navigation = (): JSX.Element => {
   const [api, contextHolder] = useNotification();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { data: session } = useSession();
+  const pathname = usePathname();
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setIsOpen((prevState) => !prevState);
   };
 
@@ -31,9 +34,6 @@ const Navigation = () => {
     });
   };
 
-  const { data: session } = useSession();
-  const pathname = usePathname();
-
   return (
     <div className='sticky w-full'>
       {contextHolder}
@@ -42,7 +42,7 @@ const Navigation = () => {
           <div className='notification_trigger mr-5 text-lg flex items-center'>
             <RightCircleOutlined onClick={openNotification} />
           </div>
-          <Link href='/'>
+          <Link href={routes.overview}>
             <Image src='/crown.svg' width={40} height={40} alt='logo' />
           </Link>
           <Divider type='vertical' style={{ height: 32, marginTop: 2 }} />
@@ -50,18 +50,30 @@ const Navigation = () => {
         {/* DESKTOP */}
         <div className='sm:flex hidden items-center'>
           <div className='flex gap-3 md:gap-8 items-center text-sm'>
-            <Link className={pathname === '/' ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'} href='/'>
+            <Link
+              className={pathname === routes.overview ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'}
+              href={routes.overview}
+            >
               Overview
             </Link>
             {session?.user ? (
               <>
                 <Link
-                  className={pathname === '/profile' ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'}
-                  href='/profile'
+                  className={
+                    pathname === routes.profile ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'
+                  }
+                  href={routes.profile}
                 >
                   Profile
                 </Link>
-                <LogoutOutlined onClick={() => signOut()} className='hover:cursor-pointer mr-2' />
+                <LogoutOutlined
+                  onClick={() =>
+                    signOut({
+                      callbackUrl: routes.signUp,
+                    })
+                  }
+                  className='hover:cursor-pointer mr-2'
+                />
                 <div className='flex justify-center items-center'>
                   <Image
                     className='rounded-full'
@@ -77,7 +89,7 @@ const Navigation = () => {
                 </div>
               </>
             ) : (
-              <Link href='/sign-up' className='bg-blue-600 text-white rounded px-5 py-1 hover:bg-blue-700'>
+              <Link href={routes.signUp} className='bg-blue-600 text-white rounded px-5 py-1 hover:bg-blue-700'>
                 Login
               </Link>
             )}
@@ -108,7 +120,7 @@ const Navigation = () => {
                   </div>
                 </div>
               ) : (
-                <Link href='/sign-up' className='bg-blue-600 text-white rounded px-5 py-1 hover:bg-blue-700'>
+                <Link href={routes.signUp} className='bg-blue-600 text-white rounded px-5 py-1 hover:bg-blue-700'>
                   Login
                 </Link>
               )}
@@ -118,24 +130,33 @@ const Navigation = () => {
           <div className='flex flex-col gap-4'>
             <Link
               onClick={() => setIsOpen(false)}
-              className={pathname === '/' ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'}
-              href='/'
+              className={pathname === routes.overview ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'}
+              href={routes.overview}
             >
               Overview
             </Link>
             {session?.user ? (
               <>
                 <Link
-                  className={pathname === '/profile' ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'}
-                  href='/profile'
+                  className={
+                    pathname === routes.profile ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'
+                  }
+                  href={routes.profile}
                   onClick={() => setIsOpen(false)}
                 >
                   Profile
                 </Link>
-                <LogoutOutlined onClick={() => signOut()} className='hover:cursor-pointer mt-16 sm:mr-2' />
+                <LogoutOutlined
+                  onClick={() =>
+                    signOut({
+                      callbackUrl: routes.signUp,
+                    })
+                  }
+                  className='hover:cursor-pointer mt-16 sm:mr-2'
+                />
               </>
             ) : (
-              <Link href='/sign-up' className='bg-blue-600 text-white rounded px-5 py-1 hover:bg-blue-700'>
+              <Link href={routes.signUp} className='bg-blue-600 text-white rounded px-5 py-1 hover:bg-blue-700'>
                 Login
               </Link>
             )}

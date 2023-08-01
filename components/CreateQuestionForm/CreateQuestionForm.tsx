@@ -1,15 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { Button } from 'antd';
 import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { Props } from './CreateQuestionForm.types';
 
-type Props = {
-  createQuestion: any;
-};
-
-const CreateQuestionForm = ({ createQuestion }: Props) => {
+const CreateQuestionForm = ({ createQuestion }: Props): JSX.Element => {
   const { type } = useParams();
   const router = useRouter();
   const { data: session } = useSession();
@@ -20,6 +16,7 @@ const CreateQuestionForm = ({ createQuestion }: Props) => {
     const answer = formData.get('answer')?.toString();
 
     const newQuestion = {
+      ...formData,
       techType,
       question,
       answer,

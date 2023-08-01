@@ -7,10 +7,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Divider, Spin } from 'antd';
 import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import NoData from './NoData';
-import QuestionCard from './QuestionCard';
+import NoData from '../NoData/NoData';
+import QuestionCard from '../QuestionCard/QuestionCard';
 
-const QuestionsList = () => {
+const QuestionsList = (): JSX.Element => {
   const { type } = useParams();
   const router = useRouter();
   const pageName = type.toString().toUpperCase();
@@ -51,13 +51,13 @@ const QuestionsList = () => {
       </div>
       <Divider />
       {filteredData.length > 0 ? (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4'>
           {filteredData?.map((item) => (
             <QuestionCard
               key={item.id}
               question={item}
               onEdit={() => console.log('a')}
-              onDelete={() => removeQuestion(item.id)}
+              onDelete={() => removeQuestion(item.id as string)}
               actionsVisible={session?.user?.email === item.authorEmail}
             />
           ))}

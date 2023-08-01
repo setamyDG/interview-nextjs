@@ -1,19 +1,24 @@
 'use client';
 
 import { getQuestions } from '@api/questions';
+import Spinner from '@components/Spinner/Spinner';
 import { Question } from '@customTypes/question';
 import { useQuery } from '@tanstack/react-query';
-import { Spin } from 'antd';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
-const Profile = () => {
+const Profile = (): JSX.Element => {
   const { data: session } = useSession();
-  const { data, isLoading } = useQuery<Question[], Error>(['questions'], getQuestions);
+  const { data, isLoading, isError } = useQuery<Question[], Error>(['questions'], getQuestions);
+  // check should be done with user id
   const createdQuestions = data?.filter((question) => question.authorEmail === session?.user?.email).length;
 
-  if (isLoading) {
-    return <Spin />;
+  if (isLoading || !session) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <div>Something went wrong</div>;
   }
 
   return (

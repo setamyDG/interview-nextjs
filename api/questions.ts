@@ -1,7 +1,7 @@
 import { Question } from '@customTypes/question';
 
 export const getQuestions = async (): Promise<Question[]> => {
-  const res = await fetch('https://64c59304c853c26efadae416.mockapi.io/api/questions');
+  const res = await fetch(`https://64c59304c853c26efadae416.mockapi.io/api/questions`);
   return res.json();
 };
 
