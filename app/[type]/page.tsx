@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => ({
-  title: `Questions of | ${params.type}}`,
+  title: `Questions of | ${params.type}`,
   description: `List of created questions and answers via users for ${params.type} topic.`,
 });
 
