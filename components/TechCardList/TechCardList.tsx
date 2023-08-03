@@ -8,14 +8,15 @@ import { useQuery } from '@tanstack/react-query';
 import { Input, Spin } from 'antd';
 import { useState } from 'react';
 import { TechCardListData } from './const';
+import { Props } from './TechCardList.types';
 
-const TechCardList = (): JSX.Element => {
+const TechCardList = ({ questions }: Props): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const filteredData = TechCardListData.filter((techCard) =>
     techCard.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const { data, isLoading } = useQuery<Question[], Error>(['techCards'], getQuestions);
+  const { data, isLoading } = useQuery<Question[], Error>(['techCards'], getQuestions, { initialData: questions });
 
   if (isLoading) {
     return <Spin />;

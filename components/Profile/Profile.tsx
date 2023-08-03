@@ -2,14 +2,20 @@
 
 import { getQuestions } from '@api/questions';
 import Spinner from '@components/Spinner/Spinner';
+import { QueryKeys } from '@const/queryKeys';
 import { Question } from '@customTypes/question';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
-const Profile = (): JSX.Element => {
+type Props = {
+  questions: Question[];
+};
+const Profile = ({ questions }: Props): JSX.Element => {
   const { data: session } = useSession();
-  const { data, isLoading, isError } = useQuery<Question[], Error>(['questions'], getQuestions);
+  const { data, isLoading, isError } = useQuery<Question[], Error>([QueryKeys.Questions], getQuestions, {
+    initialData: questions,
+  });
   // check should be done with user id
   const createdQuestions = data?.filter((question) => question.authorEmail === session?.user?.email).length;
 

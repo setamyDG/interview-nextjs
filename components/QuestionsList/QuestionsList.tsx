@@ -2,6 +2,7 @@
 
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { deleteQuestion, getQuestions } from '@api/questions';
+import { QueryKeys } from '@const/queryKeys';
 import { Question } from '@customTypes/question';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Divider, Spin } from 'antd';
@@ -9,8 +10,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import NoData from '../NoData/NoData';
 import QuestionCard from '../QuestionCard/QuestionCard';
+import { Props } from './QuestionsList.types';
 
-const QuestionsList = (): JSX.Element => {
+const QuestionsList = ({ questions }: Props): JSX.Element => {
   const { type } = useParams();
   const router = useRouter();
   const pageName = type.toString().toUpperCase();
@@ -18,12 +20,13 @@ const QuestionsList = (): JSX.Element => {
   const { data: session } = useSession();
 
   const { data, isLoading } = useQuery<Question[], Error>({
-    queryKey: ['questions'],
+    queryKey: [QueryKeys.Questions],
     queryFn: getQuestions,
+    initialData: questions,
   });
 
   const { mutateAsync: removeQuestion, isLoading: isDeleting } = useMutation(deleteQuestion, {
-    onSuccess: () => queryClient.invalidateQueries(['questions']),
+    onSuccess: () => queryClient.invalidateQueries([QueryKeys.Questions]),
   });
 
   if (isLoading || isDeleting) {
@@ -56,7 +59,6 @@ const QuestionsList = (): JSX.Element => {
             <QuestionCard
               key={item.id}
               question={item}
-              onEdit={() => console.log('a')}
               onDelete={() => removeQuestion(item.id as string)}
               actionsVisible={session?.user?.email === item.authorEmail}
             />

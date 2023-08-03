@@ -1,5 +1,4 @@
-import { createQuestion } from '@app/actions/createQuestion';
-import CreateQuestionForm from '@components/CreateQuestionForm/CreateQuestionForm';
+import QuestionForm from '@components/QuestionForm/QuestionForm';
 import type { Metadata } from 'next';
 
 type Props = {
@@ -15,7 +14,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
 const CreateQuestion = async (): Promise<JSX.Element> => (
   <section className='bg-white rounded-2xl sm:shadow-2xl px-12 py-12'>
-    <CreateQuestionForm createQuestion={createQuestion} />
+    <QuestionForm />
   </section>
 );
 

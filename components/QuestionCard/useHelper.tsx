@@ -1,20 +1,21 @@
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
+import Link from 'next/link';
 
 type Result = {
-  items: (onDelete: () => void, onEdit: () => void) => MenuProps['items'];
+  items: (onDelete: () => void, editUrl: string) => MenuProps['items'];
   questionDate: string;
 };
 
 export const useHelper = (createdAt: string): Result => {
-  const items = (onDelete: () => void, onEdit: () => void) => [
+  const items = (onDelete: () => void, editUrl: string) => [
     {
       key: '1',
       label: (
-        <div className='flex items-center' onClick={onEdit}>
+        <Link className='flex items-center' href={editUrl}>
           <EditTwoTone className='mr-2' />
           <p>Edit</p>
-        </div>
+        </Link>
       ),
     },
     {

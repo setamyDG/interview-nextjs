@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Props } from './QuestionCard.types';
 import { useHelper } from './useHelper';
 
-const QuestionCard = ({ question, onDelete, onEdit, actionsVisible }: Props): JSX.Element => {
+const QuestionCard = ({ question, onDelete, actionsVisible }: Props): JSX.Element => {
   const { items, questionDate } = useHelper(question.createdAt);
 
   return (
@@ -18,7 +18,7 @@ const QuestionCard = ({ question, onDelete, onEdit, actionsVisible }: Props): JS
           {actionsVisible && (
             <Dropdown
               menu={{
-                items: items(onDelete, onEdit),
+                items: items(onDelete, `${question.techType}/${question.id}/edit`),
               }}
             >
               <MenuOutlined className='absolute top-4 right-3 bg-white' />
@@ -26,9 +26,12 @@ const QuestionCard = ({ question, onDelete, onEdit, actionsVisible }: Props): JS
           )}
         </div>
         <p className='text-xs text-gray-300 mb-12'>{truncateString(question.answer, 200)}</p>
-        <div className='border flex items-center justify-center rounded bg-blue-600 text-white text-sm py-2 mt-4 hover:bg-blue-700 cursor-pointer'>
-          <Link href={`${question.techType}/${question.id}`}>See more</Link>
-        </div>
+        <Link
+          href={`${question.techType}/${question.id}`}
+          className='border flex items-center justify-center rounded bg-blue-600 text-white text-sm py-2 mt-4 hover:bg-blue-700 cursor-pointer'
+        >
+          See more
+        </Link>
       </div>
       <Divider style={{ margin: 0 }} />
       <div className='flex gap-3 md:gap-5 py-3 px-4 hover:bg-gray-50 hover:rounded-bl-2xl hover:rounded-br-2xl'>

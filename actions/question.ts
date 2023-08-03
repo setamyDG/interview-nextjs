@@ -1,5 +1,6 @@
 'use server';
 
+import { QueryKeys } from '@const/queryKeys';
 import { revalidateTag } from 'next/cache';
 
 export const createQuestion = async (data: FormData) => {
@@ -7,11 +8,11 @@ export const createQuestion = async (data: FormData) => {
     method: 'POST',
     body: JSON.stringify(data),
     next: {
-      tags: ['questions'],
+      tags: [QueryKeys.Questions],
     },
     headers: {
       'Content-type': 'application/json',
     },
   });
-  revalidateTag('questions');
+  revalidateTag(QueryKeys.Questions);
 };

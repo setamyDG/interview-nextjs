@@ -1,7 +1,5 @@
 import { getQuestions } from '@api/questions';
 import QuestionsList from '@components/QuestionsList/QuestionsList';
-import { dehydrate, Hydrate } from '@tanstack/react-query';
-import getQueryClient from '@utils/getQueryClient';
 import { Metadata } from 'next';
 
 type Props = {
@@ -16,15 +14,8 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 });
 
 const QuestionsPage = async (): Promise<JSX.Element> => {
-  const queryClient = getQueryClient();
-  await queryClient.prefetchQuery(['questions'], getQuestions);
-  const dehydratedState = dehydrate(queryClient);
-
-  return (
-    <Hydrate state={dehydratedState}>
-      <QuestionsList />
-    </Hydrate>
-  );
+  const data = await getQuestions();
+  return <QuestionsList questions={data} />;
 };
 
 export default QuestionsPage;

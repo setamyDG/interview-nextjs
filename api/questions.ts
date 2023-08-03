@@ -10,3 +10,8 @@ export const deleteQuestion = async (id: string): Promise<void> => {
     method: 'DELETE',
   });
 };
+
+export const getQuestion = async (id: string): Promise<Question> => {
+  const res = await fetch(`https://64c59304c853c26efadae416.mockapi.io/api/questions/${id}`);
+  return res.json();
+};
