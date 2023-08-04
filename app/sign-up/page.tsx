@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   description: 'Sign up via different providers',
 };
 
-const SignUpPage = async (): Promise<JSX.Element> => <SignUpForm />;
+const SignUpPage = () => <SignUpForm />;
 
 export default SignUpPage;

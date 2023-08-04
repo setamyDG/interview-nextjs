@@ -1,7 +1,6 @@
 'use client';
 
 import { GoogleOutlined, GithubOutlined } from '@ant-design/icons';
-import { routes } from '@const/routes';
 import { Button, Checkbox, Divider, Form, Input } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import Image from 'next/image';
@@ -34,14 +33,14 @@ const SignUpForm = (): JSX.Element => (
         </div>
         <Button
           className='w-full mt-8'
-          onClick={() => signIn('google', { callbackUrl: routes.overview })}
+          onClick={() => signIn('google', { callbackUrl: '/' })}
           icon={<GoogleOutlined />}
         >
           Google
         </Button>
         <Button
           className='w-full mt-4'
-          onClick={() => signIn('github', { callbackUrl: routes.overview })}
+          onClick={() => signIn('github', { callbackUrl: '/' })}
           icon={<GithubOutlined />}
         >
           Github
