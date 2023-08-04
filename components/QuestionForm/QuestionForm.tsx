@@ -1,9 +1,7 @@
 'use client';
 
-import { createQuestion } from '@actions/question';
+import { createQuestion, updateQuestion } from '@actions/question';
 import { getQuestion } from '@api/questions';
-import { updateQuestion } from '@app/actions/createQuestion';
-import Spinner from '@components/Spinner/Spinner';
 import { QueryKeys } from '@const/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from 'antd';
@@ -21,7 +19,7 @@ const QuestionForm = (): JSX.Element => {
   const router = useRouter();
   const { data: session } = useSession();
 
-  const { data: editedQuestion, isLoading } = useQuery([QueryKeys.Question, id], () => getQuestion(String(id)), {
+  const { data: editedQuestion } = useQuery([QueryKeys.Question, id], () => getQuestion(String(id)), {
     enabled: !!id,
   });
 
@@ -68,10 +66,6 @@ const QuestionForm = (): JSX.Element => {
     await updateQuestion(updatedQuestion, String(id));
     router.back();
   };
-
-  if (id && isLoading) {
-    return <Spinner />;
-  }
 
   return (
     <>

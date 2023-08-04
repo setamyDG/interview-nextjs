@@ -1,7 +1,5 @@
-import Profile from '@components/Profile/Profile';
-
-const ProfilePage = async (): Promise<JSX.Element> => {
-  return <Profile questions={[]} />;
+const ProfilePage = () => {
+  return <div>ProfilePage</div>;
 };
 
 export default ProfilePage;

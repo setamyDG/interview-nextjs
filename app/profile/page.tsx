@@ -1,13 +1,12 @@
+export const dynamic = 'force-dynamic';
+
 import { getQuestions } from '@api/questions';
-import { authOptions } from '@app/api/auth/[...nextauth]/route';
 import Profile from '@components/Profile/Profile';
-import { routes } from '@const/routes';
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   return {
     title: `Profile | ${session?.user?.name}`,
@@ -17,12 +16,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 const ProfilePage = async (): Promise<JSX.Element> => {
   const data = await getQuestions();
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    redirect(routes.overview);
-  }
-
   return <Profile questions={data} />;
 };
 

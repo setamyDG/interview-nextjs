@@ -1,11 +1,12 @@
 'use client';
 
 import { getQuestions } from '@api/questions';
-import Spinner from '@components/Spinner/Spinner';
 import { QueryKeys } from '@const/queryKeys';
+import { routes } from '@const/routes';
 import { Question } from '@customTypes/question';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 type Props = {
@@ -13,18 +14,14 @@ type Props = {
 };
 const Profile = ({ questions }: Props): JSX.Element => {
   const { data: session } = useSession();
-  const { data, isLoading, isError } = useQuery<Question[], Error>([QueryKeys.Questions], getQuestions, {
+  const { data } = useQuery<Question[], Error>([QueryKeys.Questions], getQuestions, {
     initialData: questions,
   });
   // check should be done with user id
   const createdQuestions = data?.filter((question) => question.authorEmail === session?.user?.email).length;
 
-  if (isLoading || !session) {
-    return <Spinner />;
-  }
-
-  if (isError) {
-    return <div>Something went wrong</div>;
+  if (!session) {
+    redirect(routes.overview);
   }
 
   return (
