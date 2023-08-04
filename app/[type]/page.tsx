@@ -1,4 +1,4 @@
-import { getQuestions } from '@api/questions';
+import { getQuestions } from '@apiData/questions';
 import QuestionsList from '@components/QuestionsList/QuestionsList';
 import { Metadata } from 'next';
 

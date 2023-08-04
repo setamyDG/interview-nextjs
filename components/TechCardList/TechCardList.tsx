@@ -1,7 +1,7 @@
 'use client';
 
 import { SearchOutlined } from '@ant-design/icons';
-import { getQuestions } from '@api/questions';
+import { getQuestions } from '@apiData/questions';
 import TechCard from '@components/TechCard/TechCard';
 import { Question } from '@customTypes/question';
 import { useQuery } from '@tanstack/react-query';

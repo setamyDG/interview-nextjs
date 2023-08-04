@@ -1,7 +1,7 @@
 'use client';
 
 import { createQuestion, updateQuestion } from '@actions/question';
-import { getQuestion } from '@api/questions';
+import { getQuestion } from '@apiData/questions';
 import { QueryKeys } from '@const/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from 'antd';
@@ -72,12 +72,17 @@ const QuestionForm = (): JSX.Element => {
       <h2 className='head_text mb-8 orange_gradient'>{id ? 'Update' : 'Create'} Question</h2>
       <form className='flex flex-col' action={id ? update : create}>
         <label className='mb-2'>Technology</label>
-        <input className='mb-4 border rounded-lg py-2 px-4 focus:outline-none ' name='techType' value={type} />
+        <input
+          className='mb-4 border rounded-lg py-2 px-4 focus:outline-none '
+          name='techType'
+          value={type}
+          onChange={() => null}
+        />
         <label className='mb-2'>Question</label>
         <textarea
           name='question'
           className='mb-4 border rounded-lg py-2 px-4 focus:outline-none'
-          value={fields.question}
+          defaultValue={fields.question}
           onChange={(e) => setFields({ ...fields, question: e.target.value })}
         />
         <label className='mb-2'>Answer</label>
@@ -85,7 +90,7 @@ const QuestionForm = (): JSX.Element => {
           name='answer'
           rows={8}
           className='mb-4 border rounded-lg py-2 px-4 focus:outline-none'
-          value={fields.answer}
+          defaultValue={fields.answer}
           onChange={(e) => setFields({ ...fields, answer: e.target.value })}
         />
         <div className='flex flex-end gap-3 mt-4'>

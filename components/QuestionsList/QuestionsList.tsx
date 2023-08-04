@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { deleteQuestion, getQuestions } from '@api/questions';
+import { deleteQuestion, getQuestions } from '@apiData/questions';
 import { QueryKeys } from '@const/queryKeys';
 import { Question } from '@customTypes/question';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';

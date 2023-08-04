@@ -1,6 +1,6 @@
 'use client';
 
-import { getQuestions } from '@api/questions';
+import { getQuestions } from '@apiData/questions';
 import { QueryKeys } from '@const/queryKeys';
 import { routes } from '@const/routes';
 import { Question } from '@customTypes/question';

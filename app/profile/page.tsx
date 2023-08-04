@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { getQuestions } from '@api/questions';
+import { getQuestions } from '@apiData/questions';
 import Profile from '@components/Profile/Profile';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';

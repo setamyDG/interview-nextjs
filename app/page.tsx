@@ -1,4 +1,4 @@
-import { getQuestions } from '@api/questions';
+import { getQuestions } from '@apiData/questions';
 import TechCardList from '@components/TechCardList/TechCardList';
 
 const Page = async (): Promise<JSX.Element> => {
